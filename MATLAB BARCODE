@@ -1,46 +1,58 @@
-clc; clear all; close all;
+clc; 
+clear; 
+close all;
 
-%getting data
-
+%getting data-----------------------------------------------------
 Data = double(csvread('datalog-2.txt'));
 
-plot(Data);
+figure(1)
+subplot(3,1,1)
+plot(Data)
+title('Text file')
 
-%removing noise
-
+%removing noise---------------------------------------------------
 ws= 15;
+
+
 for i=1:length(Data)-(ws-1)
     
     DataAve(i)= sum(Data(i:i+(ws-1)))/ws;
 end;
 hold on;
+
+subplot(3,1,2)
 plot(DataAve);
 
-%finding change in peaks
-
+%finding change in peaks---------------------------------------------
 DataAveDif = abs(DataAve(2:length(DataAve)) - DataAve(1:length(DataAve)-1));
-figure;
+
+subplot(3,1,3)
 plot(DataAveDif);
-%xlim([850 1500]);
-[pks,locs] = findpeaks(DataAveDif,'MinPeakHeight',0.1,'MinPeakDistance',10); %15 works for big k 10 works for small h
- hold on;
+hold on;
+
+dist=15;
+[pks,locs] = findpeaks(DataAveDif,'MinPeakHeight',0.1,'MinPeakDistance',dist); %15 works for big k 10 works for small h
+
 plot(locs,pks,'or');
-%xlim([850 1500]);0
+
+% ---------------------------------------------------------------
+
 widths = locs(2:end) - locs(1:end-1);
-widths = round(widths/min(widths))
+widths = round(widths/min(widths));
 
 for i=1: 1:9
     
     if (widths(i) >= 3)
-        widths(i) = 3
+        widths(i) = 3;
     
     elseif (widths(i) <= 2)
-        widths(i) = 1
+        widths(i) = 1;
     end;
 end;
 
 
 %letter library
+
 
 %A
 if widths == [3,1,1,1,1,3,1,1,3]
@@ -54,9 +66,9 @@ elseif widths ==[3,1,1,3,1,1,3,1,1]
     s = 'B';
 %C
 elseif widths ==[3,1,3,1,1,3,1,1,1]
-    s = 'C'; 
+    s = 'C' ;
 elseif widths ==[1,1,1,3,1,1,3,1,3]
-    s = 'C';l
+    s = 'C';
 %D
 elseif widths == [1,1,1,1,3,3,1,1,3]
     s = 'D';
@@ -112,7 +124,7 @@ elseif widths == [1,3,1,1,1,1,3,1,3]
 elseif widths == [1,1,1,1,3,1,1,3,3]
     s = 'N';
 elseif widths == [3,3,1,1,3,1,1,1,1]
-    s = 'N';    
+    s = 'N';   
 %O
 elseif widths == [3,1,1,1,3,1,1,3,1]
     s = 'O';
@@ -120,10 +132,9 @@ elseif widths == [1,3,1,1,3,1,1,1,3]
     s = 'O';    
 %P
 elseif widths == [1,1,3,1,3,1,1,3,1]
-    s = 'P'
+    s = 'P';
 elseif widths == [1,3,1,1,3,1,3,1,1]
-    s = 'P'    
-    
+    s = 'P';    
 end;
 
 output = s
