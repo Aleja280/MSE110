@@ -1,0 +1,129 @@
+clc; clear all; close all;
+
+%getting data
+
+Data = double(csvread('datalog-2.txt'));
+
+plot(Data);
+
+%removing noise
+
+ws= 15;
+for i=1:length(Data)-(ws-1)
+    
+    DataAve(i)= sum(Data(i:i+(ws-1)))/ws;
+end;
+hold on;
+plot(DataAve);
+
+%finding change in peaks
+
+DataAveDif = abs(DataAve(2:length(DataAve)) - DataAve(1:length(DataAve)-1));
+figure;
+plot(DataAveDif);
+%xlim([850 1500]);
+[pks,locs] = findpeaks(DataAveDif,'MinPeakHeight',0.1,'MinPeakDistance',10); %15 works for big k 10 works for small h
+ hold on;
+plot(locs,pks,'or');
+%xlim([850 1500]);0
+widths = locs(2:end) - locs(1:end-1);
+widths = round(widths/min(widths))
+
+for i=1: 1:9
+    
+    if (widths(i) >= 3)
+        widths(i) = 3
+    
+    elseif (widths(i) <= 2)
+        widths(i) = 1
+    end;
+end;
+
+
+%letter library
+
+%A
+if widths == [3,1,1,1,1,3,1,1,3]
+    s = 'A';
+elseif widths ==[3,1,1,3,1,1,1,1,3]
+    s = 'A';
+%B   
+elseif widths == [1,1,3,1,1,3,1,1,3]
+    s = 'B';
+elseif widths ==[3,1,1,3,1,1,3,1,1]
+    s = 'B';
+%C
+elseif widths ==[3,1,3,1,1,3,1,1,1]
+    s = 'C'; 
+elseif widths ==[1,1,1,3,1,1,3,1,3]
+    s = 'C';l
+%D
+elseif widths == [1,1,1,1,3,3,1,1,3]
+    s = 'D';
+elseif widths == [3,1,1,3,3,1,1,1,1]
+    s = 'D';
+
+%E
+elseif widths == [3,1,1,1,3,3,1,1,1]
+    s = 'E';
+elseif widths == [1,1,1,3,3,1,1,1,3]
+    s = 'E';    
+%F
+elseif widths == [1,1,3,1,3,3,1,1,1]
+    s = 'F';
+elseif widths == [1,1,1,3,3,1,3,1,1]
+    s = 'F';    
+%G
+elseif widths == [1,1,1,1,1,3,3,1,3]
+    s = 'G';
+elseif widths == [3,1,3,3,1,1,1,1,1]
+    s = 'G';    
+%H
+elseif widths == [3,1,1,1,1,3,3,1,1]
+    s = 'H';
+elseif widths == [1,1,3,3,1,1,1,1,3]
+    s = 'H';    
+%I
+elseif widths == [1,1,3,1,1,3,3,1,1]
+    s = 'I';
+elseif widths == [1,1,3,3,1,1,3,1,1]
+    s = 'I';    
+%J
+elseif widths == [1,1,1,1,3,3,3,1,1]
+    s = 'J';
+elseif widths == [1,1,3,3,3,1,1,1,1]
+    s = 'J';    
+%K
+elseif widths == [3,1,1,1,1,1,1,3,3]
+    s = 'K';
+elseif widths == [3,3,1,1,1,1,1,1,3]
+    s = 'K';
+%L
+elseif widths == [1,1,3,1,1,1,1,3,3]
+    s = 'L';
+elseif widths == [3,3,1,1,1,1,3,1,1]
+    s = 'L';    
+%M
+elseif widths == [3,1,3,1,1,1,1,3,1]
+    s = 'M';
+elseif widths == [1,3,1,1,1,1,3,1,3]
+    s = 'M';    
+%N
+elseif widths == [1,1,1,1,3,1,1,3,3]
+    s = 'N';
+elseif widths == [3,3,1,1,3,1,1,1,1]
+    s = 'N';    
+%O
+elseif widths == [3,1,1,1,3,1,1,3,1]
+    s = 'O';
+elseif widths == [1,3,1,1,3,1,1,1,3]
+    s = 'O';    
+%P
+elseif widths == [1,1,3,1,3,1,1,3,1]
+    s = 'P'
+elseif widths == [1,3,1,1,3,1,3,1,1]
+    s = 'P'    
+    
+end;
+
+output = s
