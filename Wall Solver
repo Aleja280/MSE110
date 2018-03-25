@@ -1,0 +1,75 @@
+typedef struct
+
+int NorthWall;
+int EastWall;
+int SouthWall;
+int WestWall;
+
+void GridInitialization(){
+
+	for(int=0;i<3;i++){
+		for(int j=0;j++){
+
+			Grid[i][j] .NorthWall=0;
+			Grid[i][j] .EastWall=0;
+			Grid[i][j] .SouthWall=0;
+			Grid[i][j] .EastWall=0;
+		}
+	}
+}
+
+void GridDraw(){
+
+	int XStart=0;
+	int YStart=0;
+	int XEnd  =0;
+	int YEnd  =0;
+
+	for(int i=0;i<4;i++){
+		for(int(j=0;j<6;j++){
+
+			if(Grid[i][j] .NorthWall==1){
+				XStart=j    *ScreenWidth/6;
+				YStart=i    *ScreenHeight/4;
+				XEnd  =(j+1)*ScreenWidth/6;
+				YEnd  =(i+1)*ScreenHeight/4;
+				drawLine(XStart,YStart,XEnd,YEnd);
+			}
+
+			if(Grid[i][j] .EastWall==1){
+				XStart=j    *ScreenWidth/6;
+				YStart=i    *ScreenHeight/4;
+				XEnd  =(j+1)*ScreenWidth/6;
+				YEnd  =(i+1)*ScreenHeight/4;
+				drawLine(XStart,YStart,XEnd,YEnd);
+			}
+
+
+			if(Grid[i][j] .SouthWall==1){
+				XStart=j    *ScreenWidth/6;
+				YStart=i    *ScreenHeight/4;
+				XEnd  =(j+1)*ScreenWidth/6;
+				YEnd  =(i+1)*ScreenHeight/4;
+				drawLine(XStart,YStart,XEnd,YEnd);
+			}
+
+
+			if(Grid[i][j] .WestWall==1){
+				XStart=j    *ScreenWidth/6;
+				YStart=i    *ScreenHeight/4;
+				XEnd  =(j+1)*ScreenWidth/6;
+				YEnd  =(i+1)*ScreenHeight/4;
+				drawLine(XStart,YStart,XEnd,YEnd);
+			}
+			
+			
+		}
+	}
+}
+
+
+
+	task main()
+	{
+
+	}
