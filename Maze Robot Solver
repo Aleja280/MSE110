@@ -155,20 +155,29 @@ void RecordRight(){
 
 void MoveRobotStraight(){
 	//Move straight one cell
+
+	resetBumpedValue(Touch_Sensor);
+	
+resetMotorEncoder(Left_Motor);
+
 	long start1 = getMotorEncoder(Left_Motor);
+                                            
 	setMotorSyncEncoder(Left_Motor, Right_Motor, 0, -598, -30);
-	while (getMotorEncoder(Right_Motor) > start1 - 598 && SensorValue(Touch_Sensor)==0) {
+	while (getMotorEncoder(Left_Motor) > start1 - 598 && SensorValue(Touch_Sensor)==0) {
 		sleep(1);
 	}
 	if(SensorValue(Touch_Sensor)==1)
 	{
 		Bump();
-		return;
 	}
 
 	motor[Left_Motor] = 0;
 	motor[Right_Motor] = 0;
-	RecordStraight();
+	if(getBumpedValue(Touch_Sensor)==1)
+	{
+
+		RecordStraight();
+	}
 }
 
 void MoveRobotLeft(){
@@ -187,14 +196,14 @@ void MoveRobotLeft(){
 
 void MoveRobotRight(){
 	//Turn robot 90 degrees right
-				long start1 = getMotorEncoder(Left_Motor);
-			setMotorSyncEncoder(Left_Motor,Right_Motor,100, 211, 30);
-			while (getMotorEncoder(Left_Motor) > start1 - 211) {
-				sleep(1);
-			}
-			motor[Left_Motor] = 0;
-			motor[Right_Motor] = 0;
-			
+	long start1 = getMotorEncoder(Left_Motor);
+	setMotorSyncEncoder(Left_Motor,Right_Motor,100, 211, 30);
+	while (getMotorEncoder(Left_Motor) > start1 - 211) {
+		sleep(1);
+	}
+	motor[Left_Motor] = 0;
+	motor[Right_Motor] = 0;
+
 	RecordRight();
 }
 
@@ -254,7 +263,6 @@ void Bump(){
 	Backup();
 	RecordFrontWall();
 	MoveRobotRight();
-	MoveRobotStraight();
 }
 
 //--------------------------------------------------------
